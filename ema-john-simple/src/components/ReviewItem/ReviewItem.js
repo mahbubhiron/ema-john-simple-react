@@ -1,12 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart, faStar } from '@fortawesome/free-solid-svg-icons';
-import './Product.css';
-import { Link } from 'react-router-dom';
 
-const Product = (props) => {
-    // console.log(props.product);
-    const { img, name, seller, price, stock, star, features, key } = props.product;
+const ReviewItem = (props) => {
+    const { img, name, seller, price, stock, star, features, key, quantity } = props.product;
     const stars = [];
     for (let i = 0; i < 5; i++) {
         if (i < star) {
@@ -21,18 +18,20 @@ const Product = (props) => {
                 <img src={img} alt="" />
             </div>
             <div>
-                <h4 className='product-name'><Link to={"/product/" + key}>{name}</Link></h4>
+                <h4 className='product-name'>{name}</h4>
                 <div className='prd-content'>
                     <div className='prd-content-left'>
+                        <p><small>P - Kye : {key}</small></p>
                         <p><small>By : {seller}</small></p>
                         <p>$ {price}</p>
+                        <p>Quantity : {quantity}</p>
                         <p><small>Only <span> {stock} </span> left in stock -oder soon</small></p>
-                        {props.showAddToCart === true && <button
+                        <button
                             className='product-button'
-                            onClick={() => props.handleAddProduct(props.product)}
+                            onClick={() => props.handleRemoveProduct(key)}
                         >
-                            <FontAwesomeIcon icon={faShoppingCart} /> add to cart
-                        </button>}
+                            <FontAwesomeIcon icon={faShoppingCart} /> Remove Item
+                        </button>
                     </div>
                     <div className='prd-content-right'>
                         <p className='prd-rating-star'>{stars}</p>
@@ -49,4 +48,4 @@ const Product = (props) => {
     );
 };
 
-export default Product;
+export default ReviewItem;

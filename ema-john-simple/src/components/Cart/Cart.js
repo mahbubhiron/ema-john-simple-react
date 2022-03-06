@@ -3,11 +3,12 @@ import './Cart.css';
 
 const Cart = (props) => {
     const cart = props.cart;
-    // const total = cart.reduce((total, prd) => total + prd.price, 0);
     let total = 0;
+    let totalQuantity =0;
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i];
-        total = total + product.price;
+        total = total + product.price * product.quantity;
+        totalQuantity = totalQuantity + product.quantity;
     }
 
     let shipping = 0;
@@ -31,6 +32,10 @@ const Cart = (props) => {
             </div>
             <div className="cart-body">
                 <div className="cart-body-left">
+                    {
+                        cart.map(pd => <p>{pd.key} :</p>)
+                    }
+                    <h4>Total Item:</h4>
                     <p>Product Price :</p>
                     <p>Shipping Cost :</p>
                     <p>Total before tax :</p>
@@ -38,6 +43,10 @@ const Cart = (props) => {
                     <h4>Order Total :</h4>
                 </div>
                 <div className="cart-body-right">
+                    {
+                        cart.map(pd => <p>{pd.quantity} : Item.P - ${pd.price * pd.quantity}</p>)
+                    }
+                    <h4>{totalQuantity}</h4>
                     <p>${total.toFixed(2)}</p>
                     <p>${shipping}</p>
                     <p>${totalBeforeTax}</p>
@@ -45,7 +54,9 @@ const Cart = (props) => {
                     <h4>${grandTotal}</h4>
                 </div>
             </div>
-            <button className='cart-button'>Order Now</button>
+            {
+                props.children
+            }
         </div>
     );
 };
